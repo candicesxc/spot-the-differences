@@ -1,7 +1,28 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ImageWithOverlay } from './ImageWithOverlay'
-import { generateImages } from '../lib/openai'
-import type { GameState, Difference } from '../types'
+import type { GameState } from '../types'
+
+const SUGGESTIONS_KEY = 'spotTheDifferenceSuggestions'
+
+function loadSuggestions(): string[] {
+  try {
+    const raw = localStorage.getItem(SUGGESTIONS_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function saveSuggestion(theme: string) {
+  const arr = loadSuggestions()
+  arr.push(theme)
+  try {
+    localStorage.setItem(SUGGESTIONS_KEY, JSON.stringify(arr))
+  } catch {
+    console.warn('Could not save suggestion to localStorage')
+  }
+  console.log('Theme suggestions:', arr)
+}
 
 interface GameBoardProps {
   game: GameState
@@ -9,56 +30,9 @@ interface GameBoardProps {
   onReset?: () => void
 }
 
-/** Default "cheat" differences: 5 circles as fraction of image (0–1). Use when AI coords are unreliable. */
-const CHEAT_DIFFERENCES: Difference[] = [
-  { id: 'c1', x: 0.25, y: 0.3, radius: 0.08 },
-  { id: 'c2', x: 0.5, y: 0.45, radius: 0.08 },
-  { id: 'c3', x: 0.75, y: 0.35, radius: 0.08 },
-  { id: 'c4', x: 0.35, y: 0.7, radius: 0.08 },
-  { id: 'c5', x: 0.65, y: 0.65, radius: 0.08 },
-]
-
 export function GameBoard({ game, onUpdate, onReset }: GameBoardProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [useCheatMode, setUseCheatMode] = useState(false)
-
-  useEffect(() => {
-    if (!game.theme || !game.isLoading) return
-
-    const key = import.meta.env.VITE_OPENAI_API_KEY
-    if (!key) {
-      onUpdate({
-        isLoading: false,
-        error: 'Missing VITE_OPENAI_API_KEY. Add it to a .env file (see .env.example).',
-      })
-      return
-    }
-
-    let cancelled = false
-    generateImages(game.theme, game.difficulty, key)
-      .then(({ imageLeft, imageRight, differences }) => {
-        if (cancelled) return
-        onUpdate({
-          imageLeft,
-          imageRight,
-          differences: differences.length >= 5 ? differences : CHEAT_DIFFERENCES,
-          isLoading: false,
-          error: null,
-          cheatMode: differences.length < 5,
-        })
-      })
-      .catch((err: unknown) => {
-        if (cancelled) return
-        onUpdate({
-          isLoading: false,
-          error: err instanceof Error ? err.message : 'Failed to generate images.',
-        })
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [game.theme, game.difficulty, game.isLoading, onUpdate])
+  const [suggestTheme, setSuggestTheme] = useState('')
+  const [suggestSubmitted, setSuggestSubmitted] = useState(false)
 
   const handleHit = useCallback(
     (id: string) => {
@@ -69,58 +43,71 @@ export function GameBoard({ game, onUpdate, onReset }: GameBoardProps) {
     [game.foundIds, onUpdate]
   )
 
-  if (game.isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 gap-6">
-        <div className="w-12 h-12 border-4 border-neon-cyan border-t-transparent rounded-full animate-spin" />
-        <p className="text-neon-cyan font-game">Generating your images…</p>
-        <p className="text-dark-400 text-sm">This may take 20–40 seconds.</p>
-      </div>
-    )
-  }
-
-  const differences = useCheatMode ? CHEAT_DIFFERENCES : game.differences
-  const total = differences.length
+  const total = game.differences.length
   const found = game.foundIds.size
   const isWin = total > 0 && found >= total
 
+  const handleSuggestSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const t = suggestTheme.trim()
+    if (!t) return
+    saveSuggestion(t)
+    setSuggestSubmitted(true)
+    setSuggestTheme('')
+  }
+
   return (
-    <div ref={containerRef} className="space-y-4">
+    <div className="space-y-4">
       {isWin && (
-        <div className="rounded-lg bg-neon-green/20 border-2 border-neon-green text-neon-green px-4 py-3 text-center font-display text-sm animate-pulse-glow">
-          YOU FOUND THEM ALL — Nice work!
+        <div className="min-h-[80px] flex flex-col gap-3">
+          <div className="rounded-lg bg-yale-blue/80 border border-yale-blue-light text-white px-4 py-3 text-center font-display text-sm">
+            YOU FOUND THEM ALL — Nice work!
+          </div>
+          {!suggestSubmitted ? (
+            <form onSubmit={handleSuggestSubmit} className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+              <input
+                type="text"
+                value={suggestTheme}
+                onChange={(e) => setSuggestTheme(e.target.value)}
+                placeholder="Suggest a theme for the next update"
+                className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-yale-dark border border-yale-blue-light text-white placeholder-white/40 text-sm outline-none focus:ring-2 focus:ring-white/30"
+                maxLength={80}
+              />
+              <button
+                type="submit"
+                disabled={!suggestTheme.trim()}
+                className="px-4 py-2 rounded-lg bg-yale-blue text-white text-sm font-game hover:bg-yale-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Submit
+              </button>
+            </form>
+          ) : (
+            <p className="text-center text-white/90 text-sm py-2 min-h-[2.5rem]">
+              Thank you! Our AI is working on this theme for the next update.
+            </p>
+          )}
         </div>
       )}
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-neon-pink font-game text-sm">
+
+      <div className="flex flex-wrap items-center justify-between gap-2 min-h-[2rem]">
+        <p className="text-yale-blue-light font-game text-sm">
           Theme: <span className="text-white">{game.theme}</span>
         </p>
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-2 text-xs text-dark-400 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={useCheatMode}
-              onChange={(e) => setUseCheatMode(e.target.checked)}
-              className="rounded border-dark-500"
-            />
-            Cheat mode (fixed spots)
-          </label>
-          <button
-            type="button"
-            onClick={() => onReset?.()}
-            className="text-xs text-neon-cyan hover:underline"
-          >
-            New game
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => onReset?.()}
+          className="text-sm text-white/80 hover:text-white hover:underline"
+        >
+          New game
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="relative">
-          <p className="text-xs text-dark-400 mb-1 font-game">LEFT</p>
+          <p className="text-xs text-yale-blue-light mb-1 font-game min-h-[1rem]">LEFT</p>
           <ImageWithOverlay
             src={game.imageLeft!}
-            differences={differences}
+            differences={game.differences}
             foundIds={game.foundIds}
             onHit={handleHit}
             side="left"
@@ -128,10 +115,10 @@ export function GameBoard({ game, onUpdate, onReset }: GameBoardProps) {
           />
         </div>
         <div className="relative">
-          <p className="text-xs text-dark-400 mb-1 font-game">RIGHT</p>
+          <p className="text-xs text-yale-blue-light mb-1 font-game min-h-[1rem]">RIGHT</p>
           <ImageWithOverlay
             src={game.imageRight!}
-            differences={differences}
+            differences={game.differences}
             foundIds={game.foundIds}
             onHit={handleHit}
             side="right"

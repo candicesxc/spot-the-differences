@@ -1,13 +1,16 @@
 import { useCallback, useRef, useState, useLayoutEffect } from 'react'
 import type { Difference } from '../types'
 
+/** Aspect 1024x512 = 2:1. Min height 400px keeps layout stable. */
+const IMG_ASPECT = 2
+const MIN_HEIGHT = 400
+
 interface ImageWithOverlayProps {
   src: string
   differences: Difference[]
   foundIds: Set<string>
   onHit: (id: string) => void
   side: 'left' | 'right'
-  /** When true, show only the left or right half (for single wide image). */
   half?: 'left' | 'right'
 }
 
@@ -21,30 +24,19 @@ export function ImageWithOverlay({
 }: ImageWithOverlayProps) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [size, setSize] = useState({ w: 0, h: 0 })
-  const imgRef = useRef<HTMLImageElement | null>(null)
+  const [size, setSize] = useState({ w: 0, h: MIN_HEIGHT })
+  const [loaded, setLoaded] = useState(false)
 
   useLayoutEffect(() => {
     const wrapper = wrapperRef.current
-    const img = new Image()
-    img.src = src
-    imgRef.current = img
+    if (!wrapper) return
+    const rect = wrapper.getBoundingClientRect()
+    const maxW = rect.width
+    const maxH = Math.max(MIN_HEIGHT, Math.min(420, maxW / (half ? IMG_ASPECT : IMG_ASPECT)))
+    setSize({ w: maxW, h: maxH })
+  }, [half])
 
-    const onLoad = () => {
-      if (!wrapper) return
-      const rect = wrapper.getBoundingClientRect()
-      const nw = img.naturalWidth
-      const nh = img.naturalHeight
-      const aspect = half ? (nw / 2) / nh : nw / nh
-      const maxW = rect.width
-      const maxH = Math.min(420, maxW / aspect)
-      setSize({ w: maxW, h: maxH })
-    }
-
-    img.addEventListener('load', onLoad)
-    if (img.complete) onLoad()
-    return () => img.removeEventListener('load', onLoad)
-  }, [src, half])
+  const handleLoad = useCallback(() => setLoaded(true), [])
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current
@@ -106,26 +98,36 @@ export function ImageWithOverlay({
   return (
     <div
       ref={wrapperRef}
-      className="relative rounded-lg overflow-hidden border-2 border-dark-600 cursor-crosshair select-none bg-dark-800"
-      style={{ maxHeight: 420 }}
+      className="relative rounded-lg overflow-hidden border-2 border-yale-blue-light/50 cursor-crosshair select-none min-h-[400px] bg-yale-dark"
+      style={{ minHeight: MIN_HEIGHT }}
       onClick={handleClick}
     >
       <div
-        className="relative w-full overflow-hidden bg-dark-700"
-        style={{ height: size.h || 280 }}
+        className="relative w-full overflow-hidden bg-yale-dark flex items-center justify-center"
+        style={{ height: size.h, minHeight: MIN_HEIGHT }}
       >
+        {!loaded && (
+          <div
+            className="absolute inset-0 flex items-center justify-center bg-yale-dark"
+            style={{ minHeight: MIN_HEIGHT }}
+            aria-hidden
+          >
+            <div className="w-full h-full max-h-[400px] bg-yale-blue/40 animate-pulse rounded" />
+          </div>
+        )}
         <img
           src={src}
           alt={`Scene ${side}`}
           className="block object-cover object-left-top"
-          style={{ ...imgStyle, maxHeight: 420 }}
+          style={{ ...imgStyle, maxHeight: 420, minHeight: MIN_HEIGHT, opacity: loaded ? 1 : 0 }}
           draggable={false}
+          onLoad={handleLoad}
         />
       </div>
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 pointer-events-none"
-        style={{ width: size.w, height: size.h, maxHeight: 420 }}
+        style={{ width: size.w, height: size.h, minHeight: MIN_HEIGHT }}
       />
     </div>
   )

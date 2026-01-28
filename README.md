@@ -1,90 +1,42 @@
 # Spot the Difference
 
-AI-powered “Spot the Difference” game built with React (Vite), Tailwind CSS, and OpenAI DALL·E 3. Hosted on GitHub Pages.
+“Spot the Difference” game built with React (Vite) and Tailwind CSS. Uses **pre-generated levels** for fast load (~0s wait) and a Yale Blue (#00356B) theme.
 
 ## Features
 
-- **Theme input** – Type a theme (e.g. “Cyberpunk Tokyo”, “Cat Picnic”) and generate a puzzle.
-- **DALL·E 3** – One wide image (1792×1024) with left/right scenes and 5 differences.
-- **Difficulty** – Easy (large), Medium, Hard (subtle).
-- **Click to find** – Click on differences; correct hits get a red circle and count toward “X of 5 found”.
-- **Cheat mode** – Use fixed difference regions for testing when AI placement is inconsistent.
+- **12 pre-defined levels** – Themes like Cyberpunk Tokyo, Cat Picnic, Underwater Castle, etc. Levels are loaded from `src/data/levels.json` (no API call during play).
+- **Instant start** – Choosing a level starts the game immediately; images come from static assets in `/public/images/`.
+- **Click to find** – Click differences; correct hits show a red circle and progress (e.g. “3 / 5 found”).
+- **Suggest a theme** – After finishing a level, users can suggest a theme. Suggestions are stored in `localStorage` under `spotTheDifferenceSuggestions` (and logged to the console). A message says: “Thank you! Our AI is working on this theme for the next update.”
 
-## Push this project to GitHub
+## Level data
 
-From the project folder, run:
-
-```bash
-git init
-git add -A
-git commit -m "Spot the Difference game – React, Vite, Tailwind, DALL·E 3"
-git branch -M main
-git remote add origin https://github.com/candicesxc/spot-the-differences.git
-git push -u origin main
-```
-
-Your `.env` file is in `.gitignore` and will **not** be committed, so your API key stays local.
+- **Location:** `src/data/levels.json`
+- **Shape:** Each level has `id`, `theme`, `imageUrl` (path to a static asset in `/public/images/`), and `differences` (array of 5 `{ x, y, radius }` in 0–1).
+- **Assets:** Put level images in `public/images/` and set `imageUrl` (e.g. `/images/level-1.png`). A shared `placeholder.svg` is used until you add real assets.
 
 ## Local development
-
-### 1. Clone and install
 
 ```bash
 git clone https://github.com/candicesxc/spot-the-differences.git
 cd spot-the-differences
 npm install
-```
-
-### 2. API key (required for image generation)
-
-**Never commit your OpenAI API key.** Use a local `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and set your key:
-
-```
-VITE_OPENAI_API_KEY=sk-your-openai-key-here
-```
-
-Get a key at [OpenAI API keys](https://platform.openai.com/api-keys).
-
-### 3. Run and build
-
-```bash
 npm run dev    # http://localhost:5173
-npm run build  # output in dist/
-npm run preview # preview production build
+npm run build  # dist/
+npm run preview
 ```
+
+No API key is required for the level-based game.
 
 ## Deploy to GitHub Pages
 
-### Option A: GitHub Actions (recommended)
-
-1. In the repo: **Settings → Pages → Build and deployment → Source**: choose **GitHub Actions**.
-2. (Optional) To enable image generation on the live site, add a secret:
-   - **Settings → Secrets and variables → Actions** → **New repository secret**
-   - Name: `VITE_OPENAI_API_KEY`, Value: your OpenAI API key.
-   - **Warning:** Anyone who can open your repo’s secrets could see it. Prefer using the app locally and leaving the deployed site without a key if you’re worried about exposure.
-3. Push to `main`; the workflow in `.github/workflows/deploy.yml` will build and deploy.
-
-### Option B: Local deploy with `gh-pages`
-
-```bash
-npm run deploy
-```
-
-Uses the `gh-pages` package to push `dist/` to the `gh-pages` branch. Ensure **Settings → Pages** uses the `gh-pages` branch and `/ (root)` (or `/docs` if you change the script).
-
-The app is built with `base: '/spot-the-differences/'` in `vite.config.ts`, so the site URL is:
-
-**https://candicesxc.github.io/spot-the-differences/**
+- **Settings → Pages → Source:** GitHub Actions.
+- Push to `main`; `.github/workflows/deploy.yml` builds and deploys.
+- Or run `npm run deploy` to publish from `dist/` via the `gh-pages` package.
 
 ## Tech stack
 
 - React 18 + TypeScript
 - Vite
 - Tailwind CSS
-- OpenAI API (DALL·E 3), called from the browser with `VITE_OPENAI_API_KEY`
+- Static level data + `localStorage` for theme suggestions

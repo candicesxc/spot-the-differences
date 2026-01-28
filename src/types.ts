@@ -10,15 +10,28 @@ export interface Difference {
   radius: number
 }
 
+/** Raw difference from levels.json (no id) */
+export interface DifferenceInput {
+  x: number
+  y: number
+  radius: number
+}
+
+export interface Level {
+  id: string
+  theme: string
+  imageUrl: string
+  differences: DifferenceInput[]
+}
+
 export interface GameState {
+  levelId: string | null
   theme: string
   difficulty: Difficulty
   imageLeft: string | null
   imageRight: string | null
   differences: Difference[]
   foundIds: Set<string>
-  /** Cheat mode: use manually defined coordinates */
-  cheatMode: boolean
   isLoading: boolean
   error: string | null
 }

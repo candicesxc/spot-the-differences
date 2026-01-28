@@ -10,11 +10,12 @@
 }
 
 body {
-  @apply bg-dark-900 text-white font-game min-h-screen;
+  @apply text-white font-game min-h-screen;
+  background-color: #001f3d;
   background-image: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 245, 255, 0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(191, 0, 255, 0.08), transparent),
-    radial-gradient(ellipse 60% 40% at 0% 50%, rgba(255, 0, 170, 0.08), transparent);
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 53, 107, 0.6), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(0, 53, 107, 0.3), transparent),
+    radial-gradient(ellipse 60% 40% at 0% 50%, rgba(0, 53, 107, 0.3), transparent);
 }
 
 /* Hide scrollbar but allow scroll */

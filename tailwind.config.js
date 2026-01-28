@@ -11,19 +11,16 @@ export default {
         display: ['Press Start 2P', 'Orbitron', 'sans-serif'],
       },
       colors: {
-        neon: {
-          cyan: '#00f5ff',
-          pink: '#ff00aa',
-          green: '#39ff14',
-          purple: '#bf00ff',
-          orange: '#ff6b00',
+        yale: {
+          DEFAULT: '#00356B',
+          blue: '#00356B',
+          'blue-light': 'rgba(255,255,255,0.15)',
+          dark: '#001f3d',
         },
-        dark: {
-          900: '#0a0a0f',
-          800: '#12121a',
-          700: '#1a1a26',
-          600: '#252533',
-        },
+        'yale-blue': '#00356B',
+        'yale-blue-light': 'rgba(255,255,255,0.25)',
+        'yale-dark': '#001f3d',
+        'yale-blue-border': '#1a5a9c',
       },
       animation: {
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
