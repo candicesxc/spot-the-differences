@@ -12,13 +12,18 @@
 ## Level data and images
 
 - **Location:** `src/data/levels.json`
-- **Shape:** Each level has `id`, `theme`, `imageUrl` (path to a static asset in `/public/images/`), and `differences` (array of 5 `{ x, y, radius }` in 0–1).
-- **Included:** Each level has a theme-colored SVG in `public/images/level-1.svg` … `level-12.svg` with difference circles that match the coordinates, so the game is playable out of the box.
-- **AI-generated images (optional):** To replace them with DALL·E 3–generated puzzles, set `VITE_OPENAI_API_KEY` in `.env`, then run:
-  ```bash
-  node scripts/generate-level-images.mjs
-  ```
-  This writes `public/images/level-1.png` … `level-12.png`. Then in `src/data/levels.json` set each level’s `imageUrl` to `/images/level-N.png` and adjust the `differences` coordinates to match the new images if needed.
+- **Shape:** Each level has `id`, `theme`, `imageUrl` (e.g. `/levels/level-1.png` or `/images/level-1.svg`), and `differences` (array of 5 `{ x, y, radius }` in 0–1, panel space).
+- **Included:** Each level has a theme-colored SVG in `public/images/level-1.svg` … `level-12.svg` so the game is playable out of the box.
+
+### Admin Tool: generate and import level assets
+
+1. Set `VITE_OPENAI_API_KEY` in `.env`.
+2. Open **http://localhost:5173?admin=1** (or `#admin`).
+3. **Generate:** Pick a level/theme, click “Generate with DALL·E 3”. A wide (1792×1024) spot-the-difference image is created.
+4. **Click 5 differences:** Click once on each of the 5 differences on the **right half** of the image.
+5. **Export:** Click “Export image + JSON”. Saves `level-<id>.png` and `level-<id>-export.json`. Put both in the same folder.
+6. **Import:** Run `node scripts/import-level.mjs /path/to/level-<id>-export.json`. The script copies the image to `public/levels/` and updates `src/data/levels.json`.
+7. Repeat for all 12 levels. When done, remove the Admin UI (delete the `isAdmin()` check and `AdminTool` from `App.tsx`) and push `public/levels/` and `levels.json` to GitHub.
 
 ## Local development
 

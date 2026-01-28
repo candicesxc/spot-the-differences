@@ -102,9 +102,10 @@ export function GameBoard({ game, onUpdate, onReset }: GameBoardProps) {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="relative">
-          <p className="text-xs text-yale-blue-light mb-1 font-game min-h-[1rem]">LEFT</p>
+      <div className="w-full aspect-[2/1] overflow-hidden rounded-lg border border-yale-blue-light/30 bg-yale-dark">
+        <div className="grid grid-cols-2 gap-0 h-full w-full">
+        <div className="relative h-full">
+          <p className="text-xs text-yale-blue-light mb-0 font-game min-h-[1rem] leading-none">LEFT</p>
           <ImageWithOverlay
             src={game.imageLeft!}
             differences={game.differences}
@@ -114,8 +115,8 @@ export function GameBoard({ game, onUpdate, onReset }: GameBoardProps) {
             half={game.imageLeft === game.imageRight ? 'left' : undefined}
           />
         </div>
-        <div className="relative">
-          <p className="text-xs text-yale-blue-light mb-1 font-game min-h-[1rem]">RIGHT</p>
+        <div className="relative h-full">
+          <p className="text-xs text-yale-blue-light mb-0 font-game min-h-[1rem] leading-none">RIGHT</p>
           <ImageWithOverlay
             src={game.imageRight!}
             differences={game.differences}
@@ -124,6 +125,7 @@ export function GameBoard({ game, onUpdate, onReset }: GameBoardProps) {
             side="right"
             half={game.imageLeft === game.imageRight ? 'right' : undefined}
           />
+        </div>
         </div>
       </div>
     </div>
