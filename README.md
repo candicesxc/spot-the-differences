@@ -9,11 +9,16 @@
 - **Click to find** – Click differences; correct hits show a red circle and progress (e.g. “3 / 5 found”).
 - **Suggest a theme** – After finishing a level, users can suggest a theme. Suggestions are stored in `localStorage` under `spotTheDifferenceSuggestions` (and logged to the console). A message says: “Thank you! Our AI is working on this theme for the next update.”
 
-## Level data
+## Level data and images
 
 - **Location:** `src/data/levels.json`
 - **Shape:** Each level has `id`, `theme`, `imageUrl` (path to a static asset in `/public/images/`), and `differences` (array of 5 `{ x, y, radius }` in 0–1).
-- **Assets:** Put level images in `public/images/` and set `imageUrl` (e.g. `/images/level-1.png`). A shared `placeholder.svg` is used until you add real assets.
+- **Included:** Each level has a theme-colored SVG in `public/images/level-1.svg` … `level-12.svg` with difference circles that match the coordinates, so the game is playable out of the box.
+- **AI-generated images (optional):** To replace them with DALL·E 3–generated puzzles, set `VITE_OPENAI_API_KEY` in `.env`, then run:
+  ```bash
+  node scripts/generate-level-images.mjs
+  ```
+  This writes `public/images/level-1.png` … `level-12.png`. Then in `src/data/levels.json` set each level’s `imageUrl` to `/images/level-N.png` and adjust the `differences` coordinates to match the new images if needed.
 
 ## Local development
 

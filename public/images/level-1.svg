@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512" width="1024" height="512">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a0a2e"/><stop offset="100%" stop-color="#2d1b4e"/></linearGradient>
+    <linearGradient id="acc1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ff00aa"/><stop offset="100%" stop-color="#00f5ff"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg1)"/>
+  <rect x="512" width="512" height="512" fill="url(#bg1)"/>
+  <text x="256" y="256" font-family="system-ui,sans-serif" font-size="20" fill="url(#acc1)" text-anchor="middle">Cyberpunk Tokyo</text>
+  <text x="768" y="256" font-family="system-ui,sans-serif" font-size="20" fill="url(#acc1)" text-anchor="middle">Cyberpunk Tokyo</text>
+  <circle cx="635" cy="143" r="36" fill="none" stroke="#00f5ff" stroke-width="2" opacity="0.9"/>
+  <circle cx="758" cy="215" r="36" fill="none" stroke="#00f5ff" stroke-width="2" opacity="0.9"/>
+  <circle cx="896" cy="179" r="36" fill="none" stroke="#00f5ff" stroke-width="2" opacity="0.9"/>
+  <circle cx="691" cy="348" r="36" fill="none" stroke="#00f5ff" stroke-width="2" opacity="0.9"/>
+  <circle cx="831" cy="369" r="36" fill="none" stroke="#00f5ff" stroke-width="2" opacity="0.9"/>
+</svg>

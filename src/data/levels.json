@@ -2,7 +2,7 @@
   {
     "id": "1",
     "theme": "Cyberpunk Tokyo",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-1.svg",
     "differences": [
       { "x": 0.22, "y": 0.28, "radius": 0.07 },
       { "x": 0.48, "y": 0.42, "radius": 0.07 },
@@ -14,7 +14,7 @@
   {
     "id": "2",
     "theme": "Cat Picnic",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-2.svg",
     "differences": [
       { "x": 0.28, "y": 0.32, "radius": 0.08 },
       { "x": 0.52, "y": 0.48, "radius": 0.08 },
@@ -26,7 +26,7 @@
   {
     "id": "3",
     "theme": "Underwater Castle",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-3.svg",
     "differences": [
       { "x": 0.25, "y": 0.25, "radius": 0.07 },
       { "x": 0.5, "y": 0.45, "radius": 0.07 },
@@ -38,7 +38,7 @@
   {
     "id": "4",
     "theme": "Cozy Coffee Shop",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-4.svg",
     "differences": [
       { "x": 0.24, "y": 0.35, "radius": 0.08 },
       { "x": 0.48, "y": 0.5, "radius": 0.08 },
@@ -50,7 +50,7 @@
   {
     "id": "5",
     "theme": "Space Station",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-5.svg",
     "differences": [
       { "x": 0.26, "y": 0.3, "radius": 0.07 },
       { "x": 0.5, "y": 0.48, "radius": 0.07 },
@@ -62,7 +62,7 @@
   {
     "id": "6",
     "theme": "Sunset Beach",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-6.svg",
     "differences": [
       { "x": 0.28, "y": 0.38, "radius": 0.08 },
       { "x": 0.52, "y": 0.52, "radius": 0.08 },
@@ -74,7 +74,7 @@
   {
     "id": "7",
     "theme": "Magic Forest",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-7.svg",
     "differences": [
       { "x": 0.22, "y": 0.32, "radius": 0.07 },
       { "x": 0.48, "y": 0.46, "radius": 0.07 },
@@ -86,7 +86,7 @@
   {
     "id": "8",
     "theme": "Neon Arcade",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-8.svg",
     "differences": [
       { "x": 0.24, "y": 0.28, "radius": 0.08 },
       { "x": 0.5, "y": 0.44, "radius": 0.08 },
@@ -98,7 +98,7 @@
   {
     "id": "9",
     "theme": "Mountain Cabin",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-9.svg",
     "differences": [
       { "x": 0.26, "y": 0.35, "radius": 0.07 },
       { "x": 0.5, "y": 0.5, "radius": 0.07 },
@@ -110,7 +110,7 @@
   {
     "id": "10",
     "theme": "Steampunk City",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-10.svg",
     "differences": [
       { "x": 0.28, "y": 0.3, "radius": 0.08 },
       { "x": 0.52, "y": 0.46, "radius": 0.08 },
@@ -122,7 +122,7 @@
   {
     "id": "11",
     "theme": "Tropical Paradise",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-11.svg",
     "differences": [
       { "x": 0.22, "y": 0.34, "radius": 0.07 },
       { "x": 0.48, "y": 0.5, "radius": 0.07 },
@@ -134,7 +134,7 @@
   {
     "id": "12",
     "theme": "Winter Village",
-    "imageUrl": "/images/placeholder.svg",
+    "imageUrl": "/images/level-12.svg",
     "differences": [
       { "x": 0.24, "y": 0.32, "radius": 0.08 },
       { "x": 0.5, "y": 0.48, "radius": 0.08 },

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512" width="1024" height="512">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#422006"/><stop offset="100%" stop-color="#78350f"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg4)"/>
+  <rect x="512" width="512" height="512" fill="url(#bg4)"/>
+  <text x="256" y="256" font-family="system-ui,sans-serif" font-size="21" fill="#fef3c7" text-anchor="middle">Cozy Coffee Shop</text>
+  <text x="768" y="256" font-family="system-ui,sans-serif" font-size="21" fill="#fef3c7" text-anchor="middle">Cozy Coffee Shop</text>
+  <circle cx="635" cy="179" r="41" fill="none" stroke="#d97706" stroke-width="2" opacity="0.9"/>
+  <circle cx="758" cy="256" r="41" fill="none" stroke="#d97706" stroke-width="2" opacity="0.9"/>
+  <circle cx="901" cy="205" r="41" fill="none" stroke="#d97706" stroke-width="2" opacity="0.9"/>
+  <circle cx="686" cy="368" r="41" fill="none" stroke="#d97706" stroke-width="2" opacity="0.9"/>
+  <circle cx="809" cy="317" r="41" fill="none" stroke="#d97706" stroke-width="2" opacity="0.9"/>
+</svg>

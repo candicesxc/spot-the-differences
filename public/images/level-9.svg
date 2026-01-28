@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512" width="1024" height="512">
+  <defs>
+    <linearGradient id="bg9" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#1c1917"/><stop offset="100%" stop-color="#44403c"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg9)"/>
+  <rect x="512" width="512" height="512" fill="url(#bg9)"/>
+  <text x="256" y="256" font-family="system-ui,sans-serif" font-size="20" fill="#d6d3d1" text-anchor="middle">Mountain Cabin</text>
+  <text x="768" y="256" font-family="system-ui,sans-serif" font-size="20" fill="#d6d3d1" text-anchor="middle">Mountain Cabin</text>
+  <circle cx="649" cy="179" r="36" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.9"/>
+  <circle cx="768" cy="256" r="36" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.9"/>
+  <circle cx="891" cy="164" r="36" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.9"/>
+  <circle cx="696" cy="348" r="36" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.9"/>
+  <circle cx="840" cy="317" r="36" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.9"/>
+</svg>
